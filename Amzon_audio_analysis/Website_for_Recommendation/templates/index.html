@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Amazon Audio Recommendation System</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #f3f3f3, #e6e6e6);
+        min-height: 100vh;
+    }
+
+    header {
+        background: linear-gradient(135deg, #232f3e, #131921);
+        color: #ff9900;
+        padding: 25px;
+        text-align: center;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 900px;
+        margin: 40px auto;
+    }
+
+    form {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        flex: 1;
+        padding: 14px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    button {
+        padding: 14px 22px;
+        border-radius: 10px;
+        border: none;
+        background: #ff9900;
+        color: black;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #e68a00;
+    }
+
+    .card {
+        background: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    .title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #111;
+    }
+
+    .price {
+        color: #B12704;
+        font-weight: bold;
+    }
+
+    .rating {
+        color: #ff9900;
+        font-weight: bold;
+    }
+
+    .link-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 14px;
+        background: #007185;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+    }
+
+    .link-btn:hover {
+        background: #005f73;
+    }
+
+    .no-results {
+        text-align: center;
+        margin-top: 40px;
+        color: #555;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Amazon Audio Recommendation</h1>
+    <p>Find the best products instantly</p>
+</header>
+
+<div class="container">
+
+    <form method="POST">
+        <!-- ✅ QUERY STAYS IN INPUT -->
+        <input type="text" name="query" placeholder="🔍 Search product..." value="{{ query or '' }}" required>
+        <button type="submit">Recommend</button>
+    </form>
+
+    {% if results %}
+        {% for item in results %}
+            <div class="card">
+                <div class="title">{{ item.product_title }}</div>
+
+                <div class="price">💰 Price: {{ item.price }}</div>
+                <div class="rating">⭐ Rating: {{ item.rating }}</div>
+
+                <a href="{{ item.product_link }}" target="_blank" class="link-btn">
+                    🔗 View Product
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-results">No products found. Try something else!</div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
